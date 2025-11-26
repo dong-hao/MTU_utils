@@ -31,7 +31,7 @@ git clone https://github.com/dong-hao/MTU_Utils/ your_local_folder
 
 ## UNITS
 *IMPORTANT NOTE:* 
-The code reads in only the raw discrete values (i.e. not coverted to physical units yet). To convert to practical unit for electrical field (mV/km) and magnetic field (nT), one need both the raw value and the metadata information from the TBL file. Assuming the time series array is “ts”, and the metadata structure is “info” the E and H fields should be: 
+The code reads in only the raw discrete values (i.e. not coverted to physical units yet). To convert to practical unit for electrical field (mV/km) and magnetic field (nT), one needs both the raw value and the metadata information from the TBL file. Assuming the time series array is “ts”, and the metadata structure is “info”, the E and H fields should be: 
 
 ``` matlab
 exfield = ts(exch,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
