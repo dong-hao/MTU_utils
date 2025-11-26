@@ -30,9 +30,9 @@ function info=readTBL(fpath,fname)
 % EGN:  final E-channel gain 
 % EGNC: E-channel gain control: HGN = PA * 2^HGNC (note: PA =
 %       PreAmplifier gain)
-% HSMP: L3 and L4 time slot (in second), this means the instrument will
-%       record L3NS seconds for L3 and L4NS seconds for L4, every HSMP
-%       seconds. 
+% HSMP: L3 and L4 time slot in second （MTU-5A) or minute (MTU-5P), 
+%       this means the instrument will record L3NS seconds for L3 and L4NS 
+%       seconds for L4, for every HSMP time slot. 
 % L3NS: L3 sample time (in second)
 % L4NS: L4 sample time (in second)
 % SRL3: L3 sample rate
@@ -215,4 +215,5 @@ while (~contains(char(ctemp),tag) || n~=inum)
     end
 end
 pos = ftell(fid);
+
 return
