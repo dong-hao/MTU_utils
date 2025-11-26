@@ -30,7 +30,7 @@ hych = 3  # Python uses 0-based indexing (was 4 in MATLAB)
 # convert to physical units
 # E field as mV/km
 exfield = ts[exch, :] * info['FSCV'] / 2**23 * 1000 / info['EGN'] / info['EXLN'] * 1000
-eyfield = ts[eych, :] * info['FSCV'] / 2**23 * 1000 / info['EGN'] / info['EXLN'] * 1000
+eyfield = ts[eych, :] * info['FSCV'] / 2**23 * 1000 / info['EGN'] / info['EYLN'] * 1000
 
 # H field as nT
 hxfield = ts[hxch, :] * info['FSCV'] / 2**23 * 1000 / info['HGN'] / info['HATT'] / info['HNOM']
