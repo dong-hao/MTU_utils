@@ -1,5 +1,5 @@
 # MTU_utils
-Utility to read the Canadian Phoenix MTU-5A instrument time series binary files in Matlab
+Utility to read the Canadian Phoenix MTU-5A instrument time series binary files in Matlab and Python
 
 A bunch of simple scripts to read the legacy Phoenix MTU-5A binary format files ... including the time series (.TSN) and table (.TBL) formats.  
 
@@ -31,8 +31,9 @@ git clone https://github.com/dong-hao/MTU_Utils/ your_local_folder
 
 ## UNITS
 *IMPORTANT NOTE:* 
-The code reads in only the raw discrete values (i.e. not coverted to physical units yet). To convert to practical unit for electrical field (mV/km) and magnetic field (nT), one needs both the raw value and the metadata information from the TBL file. Assuming the time series array is “ts”, and the metadata structure is “info”, the E and H fields should be: 
+The code reads in only the raw discrete values (i.e. not coverted to physical units yet). To convert to practical unit for electrical field (mV/km) and magnetic field (nT), one needs both the raw value and the metadata information from the TBL file. Assuming the time series array is "ts", and the metadata structure is "info", the E and H fields should be: 
 
+### Matlab
 ``` matlab
 exfield = ts(exch,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
 eyfield = ts(eych,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
@@ -40,6 +41,38 @@ hxfield = ts(hxch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 hyfield = ts(hxch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 hzfield = ts(hzch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 ```
+
+### Python
+``` python
+# Note: Python uses 0-based indexing, so channel indices are 0, 1, 2, 3, 4 instead of 1, 2, 3, 4, 5
+exfield = ts[exch, :] * info['FSCV'] / 2**23 * 1000 / info['EGN'] / info['EXLN'] * 1000
+eyfield = ts[eych, :] * info['FSCV'] / 2**23 * 1000 / info['EGN'] / info['EYLN'] * 1000
+hxfield = ts[hxch, :] * info['FSCV'] / 2**23 * 1000 / info['HGN'] / info['HATT'] / info['HNOM']
+hyfield = ts[hych, :] * info['FSCV'] / 2**23 * 1000 / info['HGN'] / info['HATT'] / info['HNOM']
+hzfield = ts[hzch, :] * info['FSCV'] / 2**23 * 1000 / info['HGN'] / info['HATT'] / info['HNOM']
+```
+
+## Python Usage
+
+The Python version requires `numpy` and optionally `matplotlib` for plotting:
+
+```bash
+pip install numpy matplotlib
+```
+
+Example usage:
+```python
+from src.read_tbl import read_tbl
+from src.read_tsn import read_tsn
+
+# Read the TBL metadata file
+info = read_tbl('./', '1690C16C.TBL')
+
+# Read the time series file
+ts, tag = read_tsn('./', '1690C16C.TS4')
+```
+
+See `examples/testbench.py` for a complete example.
 
 
 ## HOW TO GET UPDATED
