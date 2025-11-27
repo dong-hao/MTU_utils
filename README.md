@@ -35,7 +35,7 @@ The code reads in only the raw discrete values (i.e. not coverted to physical un
 
 ``` matlab
 exfield = ts(exch,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
-eyfield = ts(eych,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
+eyfield = ts(eych,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EYLN * 1000;
 hxfield = ts(hxch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 hyfield = ts(hxch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 hzfield = ts(hzch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
