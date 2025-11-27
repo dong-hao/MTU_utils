@@ -7,7 +7,7 @@ clear
 addpath(genpath('..'),'-end');
 % read the TBL file
 info=readTBL('./','1690C16C.TBL');
-% read the TS5 file
+% read the TS4 file
 [ts, tag] = readTSN('./','1690C16C.TS4');
 exch = 1;
 eych = 2;
@@ -16,7 +16,7 @@ hych = 4;
 % convert to physical units
 % E field as mV/km
 exfield = ts(exch,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
-eyfield = ts(eych,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
+eyfield = ts(eych,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EYLN * 1000;
 % H field as nT
 hxfield = ts(hxch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 hyfield = ts(hych,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
@@ -26,9 +26,13 @@ stt = 1;
 edn = info.L4NS* info.SRL4;
 subplot(4,1,1);
 plot(exfield(stt:edn));
+ylabel('Ex (mV/km)');
 subplot(4,1,2);
 plot(eyfield(stt:edn));
+ylabel('Ey (mV/km)');
 subplot(4,1,3);
 plot(hxfield(stt:edn));
+ylabel('Hx (nT)');
 subplot(4,1,4);
 plot(hyfield(stt:edn));
+ylabel('Hy (nT)');
