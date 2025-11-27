@@ -1,7 +1,7 @@
 # MTU_utils
-Utility to read the Canadian Phoenix MTU-5A instrument time series binary files in Matlab
+Utility to read the Canadian Phoenix MTU-5A instrument time series binary files in Matlab (and Python)
 
-A bunch of simple scripts to read the legacy Phoenix MTU-5A binary format files ... including the time series (.TSN) and table (.TBL) formats.  
+A bunch of simple scripts to read the legacy Phoenix MTU-5P/5A binary format files ... including the time series (.TSN) and table (.TBL) formats. Originally written in Matlab, converted to Python to be included in other packages. 
 
 ## The instrument
 
@@ -10,11 +10,11 @@ A Canadian Broadband magnetotellurics system manufactured by Phoenix Geophysics 
 
 ## DATA FORMAT
 
-Unfortunately, although the format of MTU-5A time series (.TSN) is clearly described in the Phoenix Geophysics Limited official document. The formats of TBL and the CLC/CLB files are never explicitly explained. So the current reading functions are based mainly on the works of previous researchers and my limited understanding, see: 
+Unfortunately, although the format of MTU-5A time series (.TSN) is clearly described in the Phoenix Geophysics Limited official document. The formats of TBL and the CLC/CLB files are never explicitly explained in official documents. So the current reading functions are based mainly on the works of previous researchers and my limited understanding, see: 
 
 "MTU Time Series Format" document from Phoenix Geophysics Limited for more details. 
 
-see also my code to read the Ukraine LEMI-417 instrument binary files: 
+See also my code to read the Ukraine LEMI-417 instrument binary files: 
 
 [https://github.com/dong-hao/LEMI_Utils]
 
@@ -30,9 +30,10 @@ git clone https://github.com/dong-hao/MTU_Utils/ your_local_folder
 ```
 
 ## UNITS
-*IMPORTANT NOTE:* 
+### IMPORTANT NOTE 
 The code reads in only the raw discrete values (i.e. not coverted to physical units yet). To convert to practical unit for electrical field (mV/km) and magnetic field (nT), one needs both the raw value and the metadata information from the TBL file. Assuming the time series array is “ts”, and the metadata structure is “info”, the E and H fields should be: 
 
+### MATLAB
 ``` matlab
 exfield = ts(exch,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EXLN * 1000;
 eyfield = ts(eych,:) * info.FSCV /2^23 * 1000 / info.EGN / info.EYLN * 1000;
@@ -40,7 +41,22 @@ hxfield = ts(hxch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 hyfield = ts(hxch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 hzfield = ts(hzch,:) * info.FSCV /2^23 * 1000 / info.HGN / info.HATT/ info.HNOM;
 ```
+### PYTHON
+``` python
+ exfield = ts[exch, :] * info['FSCV'] / 2**23 * 1000 / info['EGN'] / info['EXLN'] * 1000
+ eyfield = ts[eych, :] * info['FSCV'] / 2**23 * 1000 / info['EGN'] / info['EYLN'] * 1000
+ hxfield = ts[hxch, :] * info['FSCV'] / 2**23 * 1000 / info['HGN'] / info['HATT'] / info['HNOM']
+ hyfield = ts[hych, :] * info['FSCV'] / 2**23 * 1000 / info['HGN'] / info['HATT'] / info['HNOM']
+ hzfield = ts[hzch, :] * info['FSCV'] / 2**23 * 1000 / info['HGN'] / info['HATT'] / info['HNOM']
+ ```
 
+## USAGE
+See examples/benchtest.m and examples/benchtest.py for a simple test case to use. 
+The python version requires `numpy` and optionally `matplotlib` for plotting:
+ 
+ ```bash
+ pip install numpy matplotlib
+ ```
 
 ## HOW TO GET UPDATED
 ```
