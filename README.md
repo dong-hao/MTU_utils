@@ -1,5 +1,5 @@
 # MTU_utils
-Utility to read the Canadian Phoenix MTU-5 instrument files in Matlab (and Python)
+Utility to read the Canadian Phoenix MTU-5 instrument related files in Matlab (and Python)
 
 A bunch of simple scripts to read the legacy Phoenix MTU-5P/5A files ... including the binary time series (.TSN), table (.TBL) formats and the ascii instrument (.CLB) and coil (.CLC) response files. Originally written in Matlab, converted to Python to be included in other packages. 
 
@@ -30,7 +30,7 @@ Those who want to try this script are free to use it on academic/educational cas
 git clone https://github.com/dong-hao/MTU_Utils/ your_local_folder
 ```
 ## INSTRUMENT RESPONSE
-Note that the Phoenix MTU-5, like many commercial equipment, use two sets of calibration, namely the box (.CLB) and coil (.CLC). To get responses for magnetic channels, one needs to combine the two as: 
+Note that the Phoenix MTU-5, like many other commercial equipments, uses two sets of calibration, namely the box (.CLB) and coil (.CLC). To get responses for magnetic channels, one needs to combine the two as: 
 ### MATLAB
 ``` matlab
 fullcal = boxcal;
